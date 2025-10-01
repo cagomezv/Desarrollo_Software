@@ -1,0 +1,44 @@
+import tkinter as tk
+from tkinter import messagebox
+import random
+
+# Generar el número aleatorio entre 1 y 100
+numero_secreto = random.randint(1, 100)
+intentos = 0
+
+# Función para verificar el número ingresado
+def verificar_numero():
+    global intentos
+    intentos += 1
+    try:
+        adivina = int(entry.get())
+        if adivina < numero_secreto:
+            label_resultado.config(text="Demasiado bajo. Intenta otra vez.")
+        elif adivina > numero_secreto:
+            label_resultado.config(text="Demasiado alto. Intenta otra vez.")
+        else:
+            messagebox.showinfo("¡Ganaste!", f"¡Correcto! Número: {numero_secreto}\nIntentos: {intentos}")
+            root.destroy()  # Cierra la ventana al ganar
+    except ValueError:
+        label_resultado.config(text="Por favor, ingresa un número válido.")
+
+# Configuración de la ventana principal
+root = tk.Tk()
+root.title("Juego: Adivina el número")
+root.geometry("300x200")
+
+# Widgets
+label_instruccion = tk.Label(root, text="Adivina un número entre 1 y 100:")
+label_instruccion.pack(pady=10)
+
+entry = tk.Entry(root)
+entry.pack(pady=5)
+
+boton_verificar = tk.Button(root, text="Verificar", command=verificar_numero)
+boton_verificar.pack(pady=5)
+
+label_resultado = tk.Label(root, text="")
+label_resultado.pack(pady=10)
+
+# Iniciar la aplicación
+root.mainloop()
